@@ -23,7 +23,7 @@ initialize_ray(test_mode=False)
 def get_trainer(friction, checkpoint_path=None, extra_config=None):
     config = dict(
         num_gpus=0,
-        num_workers=5,
+        num_workers=10,
         num_cpus_per_worker=1,
         horizon=1000,
         lr=0.0,
