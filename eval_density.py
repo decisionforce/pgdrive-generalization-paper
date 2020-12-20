@@ -35,7 +35,7 @@ def get_trainer(density, checkpoint_path=None, extra_config=None):
         env=GeneralizationRacing,
         env_config=dict(
             # The start seed is default to 0, so the test environments are unseen before.
-            environment_num=100,
+            environment_num=200,
             traffic_density=density
         )
     )
@@ -137,6 +137,15 @@ if __name__ == '__main__':
     density_list = [0.0, 0.1, 0.2, 0.3, 0.4]
     # density_list = [0.0]
 
+    # Get the change density result
+    density_result = get_result(
+        "data/change_density",
+        density_list,
+        20
+    )
+    density_result.to_json("change_density_results.json")
+    # density_result = pd.read_json("change_density_results.json")
+
     # Get the baseline result
     baseline_result = get_result(
         "data/main_ppo",
@@ -146,15 +155,6 @@ if __name__ == '__main__':
     )
     baseline_result.to_json("change_density_baseline_results.json")
     # baseline_result = pd.read_json("change_density_baseline_results.json")
-
-    # Get the change density result
-    density_result = get_result(
-        "data/change_density",
-        density_list,
-        20
-    )
-    density_result.to_json("change_density_results.json")
-    # density_result = pd.read_json("change_density_results.json")
 
     # Process data
     baseline_result["Training Traffic Density"] = "Fixed"

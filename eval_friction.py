@@ -34,7 +34,7 @@ def get_trainer(friction, checkpoint_path=None, extra_config=None):
         env=GeneralizationRacing,
         env_config=dict(
             # The start seed is default to 0, so the test environments are unseen before.
-            environment_num=100,
+            environment_num=200,
             vehicle_config=dict(wheel_friction=friction)
         )
     )
@@ -138,6 +138,14 @@ if __name__ == '__main__':
     friction_list = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4]
     # friction_list = [0.8]
 
+    # Get the change friction result
+    friction_result = get_result(
+        "data/change_friction",
+        friction_list,
+        20
+    )
+    friction_result.to_json("results/change_friction_results.json")
+
     # Get the baseline result
     baseline_result = get_result(
         "data/main_ppo",
@@ -146,14 +154,6 @@ if __name__ == '__main__':
         select_key="environment_num=100,"  # Filter out the 100 environments baselines experiments
     )
     baseline_result.to_json("results/change_friction_baseline_results.json")
-
-    # Get the change friction result
-    friction_result = get_result(
-        "data/change_friction",
-        friction_list,
-        20
-    )
-    friction_result.to_json("results/change_friction_results.json")
 
     # Process data
     baseline_result["Training Friction"] = "Fixed"
