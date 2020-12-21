@@ -6,7 +6,7 @@ from utils import train, get_train_parser
 if __name__ == '__main__':
     args = get_train_parser().parse_args()
 
-    exp_name = "change_friction"
+    exp_name = "change_friction_baseline"
     stop = int(10000000)
 
     config = dict(
