@@ -14,7 +14,7 @@ if __name__ == '__main__':
         env_config=dict(
             environment_num=tune.grid_search([100]),
             start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
-            change_friction=tune.grid_search([True]),
+            change_friction=tune.grid_search([False]),
         ),
 
         # ===== Evaluation =====
