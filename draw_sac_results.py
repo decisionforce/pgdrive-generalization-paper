@@ -70,6 +70,8 @@ if __name__ == '__main__':
     )
     ax.set_axis_labels("", "Proportion")
     ax.axes[0][3].set_xlabel("Training Steps")
+    for i in range(len(ax.axes[0])):
+        ax.axes[0][i].ticklabel_format(style='sci', scilimits=(0, 0), axis='x')
 
     ax.fig.suptitle("Test Performance", x=0.485, size=32)
     ax.fig.subplots_adjust(top=0.80)
