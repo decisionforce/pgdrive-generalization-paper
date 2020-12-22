@@ -142,18 +142,20 @@ if __name__ == '__main__':
     friction_result = get_result(
         "data/change_friction",
         friction_list,
-        20
+        100
     )
     friction_result.to_json("results/change_friction_results.json")
+    # friction_result = pd.read_json("results/change_friction_results.json")
 
     # Get the baseline result
     baseline_result = get_result(
         "data/main_ppo",
         friction_list,
-        20,
+        100,
         select_key="environment_num=100,"  # Filter out the 100 environments baselines experiments
     )
     baseline_result.to_json("results/change_friction_baseline_results.json")
+    # baseline_result = pd.read_json("results/change_friction_baseline_results.json")
 
     # Process data
     baseline_result["Training Friction"] = "Fixed"
