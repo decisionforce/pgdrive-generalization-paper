@@ -138,29 +138,27 @@ if __name__ == '__main__':
     friction_list = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4]
     # friction_list = [0.8]
 
-    # Get the change friction result
-    friction_result = get_result(
-        "data/change_friction",
+    # Get the baseline result
+    friction_result_10 = get_result(
+        "data/change_friction_10",
         friction_list,
         100
     )
-    friction_result.to_json("results/change_friction_results.json")
-    # friction_result = pd.read_json("results/change_friction_results.json")
+    friction_result_10.to_json("results/change_friction_10.json")
+    # friction_result_10 = pd.read_json("results/change_friction_10.json")
 
-    # Get the baseline result
-    baseline_result = get_result(
-        "data/main_ppo",
+    friction_result_06 = get_result(
+        "data/change_friction_06",
         friction_list,
-        100,
-        select_key="environment_num=100,"  # Filter out the 100 environments baselines experiments
+        100
     )
-    baseline_result.to_json("results/change_friction_baseline_results.json")
-    # baseline_result = pd.read_json("results/change_friction_baseline_results.json")
+    friction_result_06.to_json("results/change_friction_06.json")
+    # friction_result_06 = pd.read_json("results/change_friction_06.json")
 
     # Process data
-    baseline_result["Training Friction"] = "Fixed"
-    friction_result["Training Friction"] = "Uniform"
-    plot_df = pd.concat([friction_result.copy(), baseline_result.copy()])
+    friction_result_06["Training Friction"] = "Fixed at 0.6"
+    friction_result_10["Training Friction"] = "Fixed at 1.0"
+    plot_df = pd.concat([friction_result_10.copy(), friction_result_06.copy()])
 
     # Draw the figure
     sns.set("paper", "darkgrid")
@@ -177,7 +175,7 @@ if __name__ == '__main__':
     )
     ax.set_ylabel("Test Success Rate")
     ax.set_xlabel("Test Friction")
-    plt.legend(loc="lower right", title="Training Friction")
+    plt.legend(title="Training Friction")
 
     # Save the figure
     path = "results/change-friction-result.pdf"

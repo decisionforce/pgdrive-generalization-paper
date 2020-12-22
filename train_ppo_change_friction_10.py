@@ -1,4 +1,4 @@
-from pgdrive.envs import ChangeFrictionEnv
+from pgdrive import PGDriveEnv
 from ray import tune
 
 from utils import train, get_train_parser
@@ -6,21 +6,23 @@ from utils import train, get_train_parser
 if __name__ == '__main__':
     args = get_train_parser().parse_args()
 
-    exp_name = "change_friction_baseline"
+    exp_name = "change_friction_10"
     stop = int(10000000)
 
     config = dict(
-        env=ChangeFrictionEnv,
+        env=PGDriveEnv,
         env_config=dict(
             environment_num=tune.grid_search([100]),
             start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
-            change_friction=tune.grid_search([False]),
+            vehicle_config=dict(
+                wheel_friction=tune.grid_search([1.0])
+            )
         ),
 
         # ===== Evaluation =====
         evaluation_interval=5,
         evaluation_num_episodes=20,
-        evaluation_config=dict(env_config=dict(environment_num=200, start_seed=0, change_friction=False)),
+        evaluation_config=dict(env_config=dict(environment_num=200, start_seed=0)),
         evaluation_num_workers=2,
         metrics_smoothing_episodes=20,
 
