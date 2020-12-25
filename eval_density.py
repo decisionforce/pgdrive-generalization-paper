@@ -180,7 +180,7 @@ if __name__ == '__main__':
     )
     ax.set_ylabel("Test Success Rate")
     ax.set_xlabel("Test Traffic Density")
-    plt.legend(title="Training Friction")
+    plt.legend(title="Training Traffic Density")
 
     # Save the figure
     path = "results/change-density-result.pdf"
