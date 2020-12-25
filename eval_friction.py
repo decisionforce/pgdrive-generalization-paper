@@ -148,9 +148,10 @@ if __name__ == '__main__':
     # friction_result_10 = pd.read_json("results/change_friction_10.json")
 
     friction_result_06 = get_result(
-        "data/change_friction_06",
+        "data/main_ppo",
         friction_list,
-        100
+        100,
+        "environment_num=100,"
     )
     friction_result_06.to_json("results/change_friction_06.json")
     # friction_result_06 = pd.read_json("results/change_friction_06.json")
@@ -175,7 +176,7 @@ if __name__ == '__main__':
     )
     ax.set_ylabel("Test Success Rate")
     ax.set_xlabel("Test Friction")
-    plt.legend(title="Training Friction")
+    plt.legend(loc="lower right", title="Training Friction")
 
     # Save the figure
     path = "results/change-friction-result.pdf"
