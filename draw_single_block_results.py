@@ -80,7 +80,7 @@ if __name__ == '__main__':
         bins=50,
         palette=colors,
         linewidth=.5,
-        # legend=None  # Show legend
+        legend=None
     )
     ax.set_ylabel("")  # Hide
     ax.set_title("PG Agent (Training)", size=16)
@@ -101,8 +101,10 @@ if __name__ == '__main__':
         bins=50,
         palette=colors,
         linewidth=.5,
-        legend=None
+        # legend=None
     )
+    l = ax.legend_
+    l._loc = 4
     ax.set_ylabel("")  # Hide
     ax.set_title("PG Agent Agent (Test)", size=16)
     ax.set_xlabel("Training Steps")
