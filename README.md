@@ -23,6 +23,8 @@ pip install -r requirements.txt
 
 ## Draw the main experiments' results
 
+Before you draw the results, please decompress the `/data.zip` to `/data` folder.
+
 ```bash
 # Generate result to results/ppo-main-result-up.pdf and results/ppo-main-result-down.pdf
 python draw_ppo_results.py
