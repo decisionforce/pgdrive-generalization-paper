@@ -137,23 +137,23 @@ if __name__ == '__main__':
     density_list = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
 
     # Get the change density result
-    density_result = get_result(
-        "data/change_density",
-        density_list,
-        100
-    )
-    density_result.to_json("results/change_density_results.json")
-    # density_result = pd.read_json("results/change_density_results.json")
+    # density_result = get_result(
+    #     "data/change_density",
+    #     density_list,
+    #     100
+    # )
+    # density_result.to_json("results/change_density_results.json")
+    density_result = pd.read_json("results/change_density_results.json")
 
     # Get the baseline result
-    baseline_result = get_result(
-        "data/main_ppo",
-        density_list,
-        100,
-        select_key="environment_num=100,"  # Filter out the 100 environments baselines experiments
-    )
-    baseline_result.to_json("results/change_density_baseline_results.json")
-    # baseline_result = pd.read_json("results/change_density_baseline_results.json")
+    # baseline_result = get_result(
+    #     "data/main_ppo",
+    #     density_list,
+    #     100,
+    #     select_key="environment_num=100,"  # Filter out the 100 environments baselines experiments
+    # )
+    # baseline_result.to_json("results/change_density_baseline_results.json")
+    baseline_result = pd.read_json("results/change_density_baseline_results.json")
 
     # Process data
     baseline_result["Training Traffic Density"] = "Fixed"

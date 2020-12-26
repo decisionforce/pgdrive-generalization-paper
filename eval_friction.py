@@ -139,22 +139,22 @@ if __name__ == '__main__':
     # friction_list = [0.8]
 
     # Get the baseline result
-    friction_result_10 = get_result(
-        "data/change_friction_10",
-        friction_list,
-        100
-    )
-    friction_result_10.to_json("results/change_friction_10.json")
-    # friction_result_10 = pd.read_json("results/change_friction_10.json")
+    # friction_result_10 = get_result(
+    #     "data/change_friction_10",
+    #     friction_list,
+    #     100
+    # )
+    # friction_result_10.to_json("results/change_friction_10.json")
+    friction_result_10 = pd.read_json("results/change_friction_10.json")
 
-    friction_result_06 = get_result(
-        "data/main_ppo",
-        friction_list,
-        100,
-        "environment_num=100,"
-    )
-    friction_result_06.to_json("results/change_friction_06.json")
-    # friction_result_06 = pd.read_json("results/change_friction_06.json")
+    # friction_result_06 = get_result(
+    #     "data/main_ppo",
+    #     friction_list,
+    #     100,
+    #     "environment_num=100,"
+    # )
+    # friction_result_06.to_json("results/change_friction_06.json")
+    friction_result_06 = pd.read_json("results/change_friction_06.json")
 
     # Process data
     friction_result_06["Training Friction"] = "Fixed at 0.6"
