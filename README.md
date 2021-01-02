@@ -7,7 +7,8 @@ This is the official material of the paper: "Improving the Generalization of End
 
 Please visit the following links to learn more on our PGDrive simulator:
 
-**[ [Website](https://decisionforce.github.io/pgdrive/) | [Github Repo](https://github.com/decisionforce/pgdrive) | [Documentation](https://pgdrive.readthedocs.io/) | [Paper](#) ]**
+**[ 📺 [Website](https://decisionforce.github.io/pgdrive/) | 🏗 [PGDrive Repo](https://github.com/decisionforce/pgdrive) | 📜 [Documentation](https://pgdrive.readthedocs.io/) | 🎓 [Paper](https://arxiv.org/pdf/2012.13681) ]**
+
 
 ## Setup the environment
 
@@ -19,6 +20,7 @@ cd pgdrive-generalization-paper
 # Install dependencies
 pip install -r requirements.txt
 ```
+
 
 
 ## Draw the main experiments' results
@@ -69,4 +71,14 @@ python eval_friction.py
 
 ## Cite this work
 
-Coming Soon!
+If you leverage this project in your work, please consider citing it with:
+
+```
+@article{li2020improving,
+  title={Improving the Generalization of End-to-End Driving through Procedural Generation},
+  author={Li, Quanyi and Peng, Zhenghao and Zhang, Qihang and Qiu, Cong and Liu, Chunxiao and Zhou, Bolei},
+  journal={arXiv preprint arXiv:2012.13681},
+  year={2020}
+}
+```
+
