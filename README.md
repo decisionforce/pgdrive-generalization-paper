@@ -71,7 +71,7 @@ python eval_friction.py
 
 ## Cite this work
 
-If you leverage this project in your work, please consider citing it with:
+If you find this work useful in your project, please consider to cite it through:
 
 ```
 @article{li2020improving,
