@@ -14,9 +14,6 @@ if __name__ == '__main__':
         env_config=dict(
             environment_num=tune.grid_search([1, 3, 6, 15, 40, 100, 1000]),
             start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
-
-            random_traffic=True,
-            traffic_density=0.2,
         ),
 
         # ===== Evaluation =====
