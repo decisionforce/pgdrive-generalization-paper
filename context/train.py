@@ -1,10 +1,9 @@
 from drivingforce.dice.dice_ppo.utils import *
+from drivingforce.train import train, get_train_parser
 from env_wrapper import StackEnv
 from pgdrive import GeneralizationRacing
 from ray import tune
 from ray.tune import register_env
-
-from utils import train, get_train_parser
 
 tf1, tf, tfv = try_import_tf()
 
