@@ -2,7 +2,7 @@ from collections import deque, OrderedDict
 
 import gym
 import numpy as np
-from gym.spaces import Box
+from gym.spaces import Box, Tuple
 
 
 class StackEnv(gym.Wrapper):
@@ -22,6 +22,11 @@ class StackEnv(gym.Wrapper):
         self.stacks = OrderedDict()
         self._prev_obs = None
 
+        self.low = self.action_space.low[0] if np.isfinite(self.action_space.low[0]) else -1.0
+        self.high = self.action_space.high[0] if np.isfinite(self.action_space.high[0]) else 1.0
+        self.obs_low = self.observation_space.low[0] if np.isfinite(self.observation_space.low[0]) else -1.0
+        self.obs_high = self.observation_space.high[0] if np.isfinite(self.observation_space.high[0]) else 1.0
+
         if isinstance(self.observation_space, Box):
             shape = self.observation_space.shape
             assert len(shape) == 1, "Only support scalar observation now!"
@@ -29,16 +34,16 @@ class StackEnv(gym.Wrapper):
             self.obs_dim = (shape[0] + self.act_dim + 1) * self.num_stacks
             if self.return_latest_obs:
                 self.obs_dim += self.original_obs_dim
-            space = Box(low=self.observation_space.low[0], high=self.observation_space.high[0], shape=(self.obs_dim,))
+                space = Tuple([
+                    Box(low=-np.inf, high=+np.inf, shape=(self.obs_dim - self.original_obs_dim,)),
+                    Box(low=-np.inf, high=+np.inf, shape=(self.original_obs_dim,)),
+                ])
+            else:
+                raise ValueError()
             self.observation_space = space
 
         else:
             raise NotImplementedError("Only support Box space now!")
-
-        self.low = self.action_space.low[0] if np.isfinite(self.action_space.low[0]) else -1.0
-        self.high = self.action_space.high[0] if np.isfinite(self.action_space.high[0]) else 1.0
-        self.obs_low = self.observation_space.low[0] if np.isfinite(self.observation_space.low[0]) else -1.0
-        self.obs_high = self.observation_space.high[0] if np.isfinite(self.observation_space.high[0]) else 1.0
 
     def step(self, action):
         obs, reward, done, info = super(StackEnv, self).step(action)
@@ -50,14 +55,17 @@ class StackEnv(gym.Wrapper):
         self.stacks['action'].append(self._normalize_action(action))
         self.stacks['obs'].append(obs)
         self.stacks['reward'].append(self._clip_reward(reward))
-        # TODO need to normalize action, obs and reward.
+        return self.get_obs(latest_obs)
+
+    def get_obs(self, latest_obs):
         if self.return_latest_obs:
             ret = np.concatenate(
-                [np.array(stack, dtype=np.float).reshape(-1) for stack in self.stacks.values()] + [latest_obs]
+                [np.array(stack, dtype=np.float).reshape(-1) for stack in self.stacks.values()]
             )
+            ret = [ret, latest_obs]
         else:
             raise ValueError("Not supported yet!")
-        assert len(ret) == self.obs_dim
+        assert len(ret[0]) + len(ret[1]) == self.obs_dim
         return ret
 
     def _normalize_action(self, action):
@@ -90,6 +98,7 @@ class StackEnv(gym.Wrapper):
         obs = super(StackEnv, self).reset(**kwargs)
         self._prev_obs = obs
         self.init_stack()
+        return self.get_obs(obs)
 
 
 if __name__ == '__main__':
