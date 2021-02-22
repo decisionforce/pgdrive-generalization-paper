@@ -30,10 +30,10 @@ if __name__ == '__main__':
         rollout_fragment_length=200,
         sgd_minibatch_size=100,
         train_batch_size=30000,
-        num_gpus=0.5 if args.num_gpus != 0 else 0,
-        num_cpus_per_worker=0.25,
+        num_gpus=0.75 if args.num_gpus != 0 else 0,
+        num_cpus_per_worker=0.2,
         num_cpus_for_driver=1,
-        num_workers=10,
+        num_workers=5,
     )
 
     train(
