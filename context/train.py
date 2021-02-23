@@ -8,13 +8,14 @@ from ray.tune import register_env
 tf1, tf, tfv = try_import_tf()
 
 if __name__ == '__main__':
+    raise ValueError("Deprecated file! Please go to drivingforce!")
     args = get_train_parser().parse_args()
 
 
     def _make_env(env_config):
+        num_stacks = env_config.pop("num_stacks")
         e = GeneralizationRacing(env_config)
-        # TODO get num_stack from env_config
-        return StackEnv(e, 3)
+        return StackEnv(e, num_stacks)
 
 
     register_env("StackPGDrive", _make_env)
@@ -29,6 +30,7 @@ if __name__ == '__main__':
             # environment_num=tune.grid_search([1, 3, 6, 15, 40, 100, 1000]),
             # start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
 
+            num_stacks=tune.grid_search([3, 7]),
             environment_num=tune.grid_search([1, 3, 15, 100]),
             start_seed=tune.grid_search([5000, ]),
         ),
