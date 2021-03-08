@@ -159,20 +159,22 @@ if __name__ == '__main__':
     # Process data
     friction_result_06["Training Friction"] = "Fixed at 0.6"
     friction_result_10["Training Friction"] = "Fixed at 1.0"
-    plot_df = pd.concat([friction_result_10.copy(), friction_result_06.copy()])
+    plot_df = pd.concat([friction_result_06.copy(), friction_result_10.copy()])
 
     # Draw the figure
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    plt.figure(figsize=(4, 2))
+    c = sns.color_palette("colorblind")
     ax = sns.lineplot(
         data=plot_df,
         x="friction",
         y="success_rate",
         hue="Training Friction",
+        palette=[c[0], c[2]],
         ci="sd",
         err_kws=dict(alpha=0.1),
         marker="o",
-        ms=7.5
+        ms=5
     )
     ax.set_ylabel("Test Success Rate")
     ax.set_xlabel("Test Friction")
