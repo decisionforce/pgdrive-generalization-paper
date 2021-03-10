@@ -22,11 +22,12 @@ if __name__ == '__main__':
     # Draw training performance
     new_df = get_termination(sbdf, evaluate=False)
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    new_df["Termination"] = new_df["done way"]
+    plt.figure(figsize=(4, 2))
     ax = sns.histplot(
         new_df,
         x="timesteps_total",
-        hue="done way",
+        hue="Termination",
         weights="value",
         multiple="fill",
         element="poly",
@@ -36,18 +37,19 @@ if __name__ == '__main__':
         legend=None
     )
     ax.set_ylabel("Proportion")
-    ax.set_title("Single-block (Training)", size=16)
+    ax.set_title("Single-block (Training)", size=14)
     ax.set_xticklabels([])
     ax.set_xlabel("")
     plt.savefig("results/single-block-result-up.pdf", dpi=300, format="pdf", bbox_inches="tight")
     # Draw test performance
     new_df = get_termination(filter_nan(sbdf), evaluate=True, num_points=60)
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    plt.figure(figsize=(4, 2))
+    new_df["Termination"] = new_df["done way"]
     ax = sns.histplot(
         new_df,
         x="timesteps_total",
-        hue="done way",
+        hue="Termination",
         weights="value",
         multiple="fill",
         element="poly",
@@ -57,19 +59,19 @@ if __name__ == '__main__':
         legend=None
     )
     ax.set_ylabel("Proportion")
-    ax.set_title("Single-block Agent (Test)", size=16)
+    ax.set_title("Single-block Agent (Test)", size=14)
     ax.set_xlabel("Training Steps")
     plt.savefig("results/single-block-result-down.pdf", dpi=300, format="pdf", bbox_inches="tight")
 
     # ===== Draw the PG agent's results =====
     # Get data
     pgdf = parse("data/main_ppo", True)
-    pgdf = pgdf[pgdf["num_envs_val"] == 100]
+    pgdf = pgdf[pgdf["config/env_config/environment_num"] == 100]
     # Draw training performance
     new_df = get_termination(pgdf, evaluate=False)
     new_df["Termination"] = new_df["done way"]
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    plt.figure(figsize=(4, 2))
     ax = sns.histplot(
         new_df,
         x="timesteps_total",
@@ -83,18 +85,19 @@ if __name__ == '__main__':
         legend=None
     )
     ax.set_ylabel("")  # Hide
-    ax.set_title("PG Agent (Training)", size=16)
+    ax.set_title("PG Agent (Training)", size=14)
     ax.set_xticklabels([])
     ax.set_xlabel("")
     plt.savefig("results/pg-agent-result-up.pdf", dpi=300, format="pdf", bbox_inches="tight")
     # Draw test performance
     new_df = get_termination(filter_nan(pgdf), evaluate=True, num_points=60)
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    new_df["Termination"] = new_df["done way"]
+    plt.figure(figsize=(4, 2))
     ax = sns.histplot(
         new_df,
         x="timesteps_total",
-        hue="done way",
+        hue="Termination",
         weights="value",
         multiple="fill",
         element="poly",
@@ -106,6 +109,6 @@ if __name__ == '__main__':
     l = ax.legend_
     l._loc = 4
     ax.set_ylabel("")  # Hide
-    ax.set_title("PG Agent Agent (Test)", size=16)
+    ax.set_title("PG Agent Agent (Test)", size=14)
     ax.set_xlabel("Training Steps")
     plt.savefig("results/pg-agent-result-down.pdf", dpi=300, format="pdf", bbox_inches="tight")
