@@ -1,4 +1,4 @@
-from pgdrive import GeneralizationRacing
+from pgdrive import PGDriveEnv
 from ray import tune
 
 from utils import train, get_train_parser
@@ -10,7 +10,7 @@ if __name__ == '__main__':
     stop = int(10000000)
 
     config = dict(
-        env=GeneralizationRacing,
+        env=PGDriveEnv,
         env_config=dict(
             environment_num=tune.grid_search([1, 3, 6, 15, 40, 100, 1000]),
             start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
