@@ -1,4 +1,4 @@
-from pgdrive import GeneralizationRacing
+from pgdrive import PGDriveEnv
 from ray import tune
 
 from utils import train, get_train_parser
@@ -10,7 +10,7 @@ if __name__ == '__main__':
     stop = int(10000000)
 
     config = dict(
-        env=GeneralizationRacing,
+        env=PGDriveEnv,
         env_config=dict(
             environment_num=tune.grid_search([1, 3, 6, 15, 40, 100, 1000]),
             start_seed=tune.grid_search([5000, 6000, 7000, 8000, 9000]),
@@ -30,10 +30,10 @@ if __name__ == '__main__':
         rollout_fragment_length=200,
         sgd_minibatch_size=100,
         train_batch_size=30000,
-        num_gpus=0.5 if args.num_gpus != 0 else 0,
-        num_cpus_per_worker=0.25,
+        num_gpus=0.75 if args.num_gpus != 0 else 0,
+        num_cpus_per_worker=0.2,
         num_cpus_for_driver=1,
-        num_workers=10,
+        num_workers=5,
     )
 
     train(

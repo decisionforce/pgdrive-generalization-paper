@@ -162,21 +162,23 @@ if __name__ == '__main__':
 
     # Draw the figure
     sns.set("paper", "darkgrid")
-    plt.figure(figsize=(4, 3))
+    plt.figure(figsize=(4, 2))
 
     # This line solves the bar with x 0.3000000001 and makes figure pretty.
     plot_df.loc[((plot_df["density"] - 0.3 < 0.01) & (plot_df["density"] - 0.3 > -0.01)), "density"] = 0.3
 
     # Draw the figure
+    c = sns.color_palette("colorblind")
     ax = sns.lineplot(
         data=plot_df,
         x="density",
         y="success_rate",
         hue="Training Traffic Density",
+        palette=[c[0], c[2]],
         ci="sd",
         err_kws=dict(alpha=0.1),
         marker="o",
-        ms=7.5
+        ms=5
     )
     ax.set_ylabel("Test Success Rate")
     ax.set_xlabel("Test Traffic Density")
