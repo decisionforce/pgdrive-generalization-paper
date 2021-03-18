@@ -10,4 +10,4 @@ seaborn==0.11.0
 tensorflow-probability==0.11.1
 tabulate
 tensorboardX
-pgdrive==0.1.0
+pgdrive==0.1.4
